@@ -1,0 +1,68 @@
+body {
+  font-family: "Comic Neue";
+}
+
+div.container {
+  display: flex;
+  text-align: center;
+  align-content: center;
+  flex-direction: column;
+}
+
+#app {
+  margin: 0 auto;
+  display: block;
+  overflow: auto;
+}
+
+h1 {
+  text-align: center;
+}
+
+.square {
+  position: relative;
+  float: left;
+  font-size: 12px;
+  width: 18px;
+  height: 18px;
+  background: #f9f9f9;
+  border: 1px solid #000;
+  text-align: center;
+  cursor: pointer;
+}
+.square:after {
+  content: " ";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: #c7c7c7;
+}
+.square.active:after {
+  display: none;
+}
+
+.btn-wrapper {
+  display: flex;
+  text-align: center;
+  align-content: center;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+#gameOver {
+  position: absolute;
+  display: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: red;
+}
+
+ul {
+  margin: 0 0 20px;
+  padding: 0;
+}
+
+/*# sourceMappingURL=index.css.map */
