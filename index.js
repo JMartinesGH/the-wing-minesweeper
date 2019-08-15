@@ -13,8 +13,8 @@ let minesweeper = {
             type = Math.floor(Math.random() * Math.floor(4))
         }
         if (type === 1) {
-            minesweeper.config.activeBombs++
-            console.log(minesweeper.activeBombs)
+            minesweeper.config.activeBombs +=1 
+            console.log(minesweeper.config.activeBombs)
         }
 
         let square = document.createElement('div')
@@ -31,7 +31,7 @@ let minesweeper = {
     generateGrid: () => {
         console.log("GenerateGrid")
         document.getElementById('app').innerHTML = ""
-        minesweeper.activeBombs = 0
+        // minesweeper.activeBombs = 0
         length = minesweeper.config.cells
 
         // set width of app container
@@ -68,7 +68,12 @@ let minesweeper = {
             // console.log(squares[i])
             squares[i].addEventListener('click', function () {
                 this.classList.add('active')
-                minesweeper.clickSquare(this);
+                minesweeper.clickSquare(this)
+            })
+            // add right click
+            squares[i].addEventListener('contextmenu', function(event) {
+                event.preventDefault()
+                minesweeper.addFlagToSquare(this)
             })
         }
     },
@@ -115,6 +120,25 @@ let minesweeper = {
             minesweeper.gameOver()
         }else{
             minesweeper.distanceFromMine(inObj)
+        }
+    },
+    addFlagToSquare: (inObj)=>{
+        console.log('right click')
+        console.log(inObj)
+        if(inObj.classList.contains('bomb')){
+            inObj.classList.remove('bomb')
+            inObj.classList.add('active')
+            inObj.innerHTML = "🚩"
+            if (minesweeper.config.activeBombs > 0){
+                minesweeper.config.activeBombs--
+            }else{
+                minesweeper.gameOver()
+            }
+
+        }else{
+            inObj.classList.add('active')
+            inObj.classList.add('empty')
+            inObj.innerHTML = "🚩"
         }
     },
     gameOver: ()=>{
