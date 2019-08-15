@@ -42,12 +42,24 @@ let minesweeper = {
         for (let index = 0; index < length*length; index++) {
             grid.push(minesweeper.generateSquare())
         }
+        // shuffle grid
+        grid = minesweeper.shuffleBombs(grid)
         console.log("grid size:",grid.length)
         grid.map((item)=>{
             app.append(item);
         })
 
         minesweeper.addClicktoSquares();
+    },
+    shuffleBombs: (array) => {
+        let j,x
+        for(let i = array.length-1; i>0; i--){
+            j = Math.floor(Math.random() * (i+1))
+            x = array[i]
+            array[i] = array[j];
+            array[j] = x
+        }
+        return array
     },
     addClicktoSquares: ()=>{
         // click events for squares
