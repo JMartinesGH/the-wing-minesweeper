@@ -84,6 +84,7 @@ let minesweeper = {
         }
     },
     distanceFromMine: (inObj)=>{
+        // need ot document
         console.log("DistanceFromMine")
         let squares = document.querySelectorAll('.square');
         let inIndex = 0;
