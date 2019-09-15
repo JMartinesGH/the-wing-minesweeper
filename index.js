@@ -6,35 +6,36 @@ let minesweeper = {
     },
     generateSquare: ()=>{
         // console.log("GenerateSquare")
+        // sets square to 1 or 0
         let type = 0
         if(minesweeper.config.activeBombs >= minesweeper.config.bombs){
             type = 0;
         }else{
             type = Math.floor(Math.random() * Math.floor(4))
         }
+        // if 1, increments active bombs
         if (type === 1) {
             minesweeper.config.activeBombs +=1 
             console.log(minesweeper.config.activeBombs)
         }
 
+        // create dom element, add .square
         let square = document.createElement('div')
             square.classList.add('square')
         
+        // if 1 set to .bomb and add emoji
             type === 1 ? square.classList.add('bomb') : square.classList.add('empty')
         let squareText = type === 1 ? '💣' : '💜'
-
-        
             square.textContent=squareText
             
         return square
     },
     generateGrid: () => {
         console.log("GenerateGrid")
-        document.getElementById('app').innerHTML = ""
-        // minesweeper.activeBombs = 0
-        length = minesweeper.config.cells
+        document.getElementById('app').innerHTML = "" // empty grid
+        length = minesweeper.config.cells 
 
-        // set width of app container
+        // set width of app container in px
         let app = document.getElementById('app');
         gridWidth = length * 20;
         app.style.width = gridWidth+"px";
@@ -42,20 +43,25 @@ let minesweeper = {
         for (let index = 0; index < length*length; index++) {
             grid.push(minesweeper.generateSquare())
         }
-        // shuffle grid
+        // shuffle grid and append to body
         grid = minesweeper.shuffleBombs(grid)
         console.log("grid size:",grid.length)
         grid.map((item)=>{
             app.append(item);
         })
 
+        // add click handler to squares
         minesweeper.addClicktoSquares();
     },
     shuffleBombs: (array) => {
+        // basic fisher-yates shuffle algorithm
         let j,x
         for(let i = array.length-1; i>0; i--){
+            // sets j ot random number between 1 and length-1
             j = Math.floor(Math.random() * (i+1))
+            // sets x to current position
             x = array[i]
+            // set current position to j and sets j to current position
             array[i] = array[j];
             array[j] = x
         }
@@ -107,9 +113,10 @@ let minesweeper = {
     },
     resetGame: ()=>{
         console.log("Game Reset")
+        // set active bombs back to zero, generate grid
         minesweeper.config.activeBombs = 0
         minesweeper.generateGrid()
-        // show gameover
+        // hide gameover
         gameOver = document.getElementById("gameOver")
         gameOver.style.display = 'none';
     },
@@ -125,6 +132,8 @@ let minesweeper = {
     addFlagToSquare: (inObj)=>{
         console.log('right click')
         console.log(inObj)
+        // if bomb, set .active to display, change to 🚩, 
+        // decrement active bombs, if no more bombs, show gameover
         if(inObj.classList.contains('bomb')){
             inObj.classList.remove('bomb')
             inObj.classList.add('active')
@@ -134,7 +143,7 @@ let minesweeper = {
             }else{
                 minesweeper.gameOver()
             }
-
+        // if not bomb, set as 🚩anyway
         }else{
             inObj.classList.add('active')
             inObj.classList.add('empty')
@@ -144,6 +153,7 @@ let minesweeper = {
     gameOver: ()=>{
         console.log('gameOver')
         let squares = document.querySelectorAll('.square'); 
+        // show bombs, diable clicks
         for (let i = 0; i < squares.length; i++) {
             squares[i].style.pointerEvents = 'none';
             squares[i].classList.add('active')
@@ -151,29 +161,24 @@ let minesweeper = {
         // show gameover
         gameOver = document.getElementById("gameOver")
         gameOver.style.display = 'block';
-        // show bombs
-
     },
     easyMode: ()=>{
         minesweeper.config.cells = 9
         minesweeper.config.bombs = 10
         minesweeper.config.activeBombs = 0
         minesweeper.resetGame()
-        // minesweeper.generateGrid()
     },
     mediumMode: () => {
         minesweeper.config.cells = 18
         minesweeper.config.bombs = 36
         minesweeper.config.activeBombs = 0
         minesweeper.resetGame()
-        // minesweeper.generateGrid()
     },
     hardMode: () => {
         minesweeper.config.cells = 36
         minesweeper.config.bombs = 144
         minesweeper.config.activeBombs = 0
         minesweeper.resetGame()
-        // minesweeper.generateGrid()
     },
 }
 
