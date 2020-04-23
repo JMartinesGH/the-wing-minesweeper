@@ -46,8 +46,8 @@ let minesweeper = {
         // shuffle grid and append to body
         grid = minesweeper.shuffleBombs(grid)
         console.log("grid size:",grid.length)
-        grid.map((item)=>{
-            app.append(item);
+        grid.map((square)=>{
+            app.append(square);
         })
 
         // add click handler to squares
@@ -57,7 +57,7 @@ let minesweeper = {
         // basic fisher-yates shuffle algorithm
         let j,x
         for(let i = array.length-1; i>0; i--){
-            // sets j ot random number between 1 and length-1
+            // sets j to random number between 1 and length-1
             j = Math.floor(Math.random() * (i+1))
             // sets x to current position
             x = array[i]
